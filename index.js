@@ -10,12 +10,12 @@ app.use(express.static(__dirname + '/client'));
 //Store all JS and CSS in Scripts folder.
 
 app.get('/', function (req, res) {
-  console.log(req);
+  // console.log(req);
   res.sendFile('index.html');
 });
 
 app.get('/api/stockoption', function (req, res) {
-  console.log('22222222222');
+  // console.log('22222222222');
   res.sendFile('index.html');
 });
 
