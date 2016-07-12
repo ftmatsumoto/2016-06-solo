@@ -1,9 +1,56 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Hello World</title>
-</head>
-<body>
+<html ng-app>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+    <div>
+      <ul class='navigation'>
+        <div><a href='#/stockoption' class="btn btn-default">Portfolio</a></div>
+      </ul>
+    </div>
 
-</body>
+    <div id="form-container" ng-controller="OptionController" ng-submit="BlackScholes()">
+      <form class="option">
+        <div class="form-group">
+          <label>CALL: </label>
+          <input type="radio" name="cpflag">
+          <label>PUT: </label>
+          <input type="radio" name="cpflag">
+        </div>
+        <div class="form-group">
+          <label>Ticker: </label>
+          <input type="text" name="ticker" placeholder="ticker">
+        </div>
+        <div class="form-group">
+          <label>Expiration date: </label>
+          <input type="date" name="date" placeholder="mm/dd/yyyy">
+        </div>
+        <div class="form-group">
+          <label>Last price: </label>
+          <input type="number" name="lprice" placeholder="$" min="0">
+        </div>
+        <div class="form-group">
+          <label>Strike price: </label>
+          <input type="number"" name="kprice" placeholder="$" min="0">
+        </div>
+        <div class="form-group">
+          <label>Volatility: </label>
+          <input type="number" name="vol" placeholder="%" min="0">
+        </div>
+        <div class="form-group">
+          <label>Interest rate: </label>
+          <input type="number" name="ticker" placeholder="%" min="0" max="100">
+        </div>
+        <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
+      </form>
+
+    </div>
+      <!-- <div ng-view></div> -->
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="bs.js"></script>
 </html>
