@@ -10,9 +10,9 @@ angular.module('app.option', [])
     d2 = d1 - volatility * Math.sqrt(time);
 
     if (putcall === "c") {
-      $scope.output = spot * CND(d1) - strike * Math.exp(-rfrate * time) * CND(d2);
+      $scope.output = spot * $scope.CND(d1) - strike * Math.exp(-rfrate * time) * $scope.CND(d2);
     } else {
-      $scope.output = strike * Math.exp(-rfrate * time) * CND(-d2) - spot * CND(-d1);
+      $scope.output = strike * Math.exp(-rfrate * time) * $scope.CND(-d2) - spot * $scope.CND(-d1);
     }
   }
 
@@ -22,10 +22,10 @@ angular.module('app.option', [])
 
       a1 = 0.31938153, a2 = -0.356563782, a3 = 1.781477937, a4 = -1.821255978 , a5 = 1.330274429;
       if (x < 0.0) {
-        return 1-CND(-x);
+        return 1 - $scope.CND(-x);
       } else {
         k = 1.0 / (1.0 + 0.2316419 * x);
-        return 1.0 - Math.exp(-x * x / 2.0)/ Math.sqrt(2*Math.PI) * k * (a1 + k * (-0.356563782 + k * (1.781477937 + k * (-1.821255978 + k * 1.330274429)))) ;
+        return 1.0 - Math.exp(-x * x / 2.0)/ Math.sqrt(2 * Math.PI) * k * (a1 + k * (-0.356563782 + k * (1.781477937 + k * (-1.821255978 + k * 1.330274429)))) ;
       }
   }
 })
