@@ -7,15 +7,22 @@
     <script src="/lib/angular-route/angular-route.js"></script>
   </head>
   <body>
-    <div>
-      <ul class='navigation'>
-        <div><a href='#/' class="btn btn-default">Home</a></div>
-        <div><a href='#/stockoption' class="btn btn-default">Pricing</a></div>
-        <div><a href='#/stockoption' class="btn btn-default">Portfolio</a></div>
-      </ul>
-    </div>
-      <div ng-view></div>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Stock options</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#/stockoption">Pricing</a></li>
+          <li><a href="#/portfolio">Portfolio</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div ng-view></div>
   </body>
   <script src="app.js"></script>
-  <script src="stockoption.js"></script>
+  <script src="pricing/stockoption.js"></script>
+  <script src="portfolio/portfolio.js"></script>
 </html>

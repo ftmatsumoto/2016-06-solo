@@ -1,7 +1,24 @@
 angular.module('app.option', [])
-.controller('OptionController', function ($scope) {
+.controller('OptionController', function ($scope, portfolioFactory) {
   $scope.output = 0;
-  // $scope.date = Date.now();
+  $scope.storage = [];
+
+  $scope.addOption = function(ticker, cpflag, cprice, kprice, expdate, intrate, vol) {
+    $scope.storage.push({
+      contracts: 0,
+      ticker: ticker,
+      cpflag: cpflag,
+      expdate: expdate,
+      kprice: kprice,
+      vol: vol
+    })
+    console.log($scope.storage);
+  }
+  $scope.remove = function(item) {
+    var index = $scope.storage.indexOf(item);
+    $scope.storage.splice(index, 1);
+    console.log($scope.storage);
+  }
   $scope.BlackScholes = function (putcall, spot, strike, time, rfrate, volatility) {
     var d1, d2;
     var time = Math.round(time - Date.now())/(24 * 60 * 60 * 1000 * 365);

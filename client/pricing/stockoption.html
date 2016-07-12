@@ -1,0 +1,61 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3">
+      <div ng-submit="addOption(option.ticker, option.cpflag, option.cprice, option.kprice, option.expdate, option.intrate, option.vol)">
+        <!-- BlackScholes(option.cpflag, option.cprice, option.kprice, option.expdate, option.intrate, option.vol) -->
+        <form>
+          <div class="form-group">
+            <label for="tickerForm">Ticker: </label>
+            <input id="tickerForm" type="text" name="ticker" ng-model="option.ticker" placeholder="ticker">
+          </div>
+          <div class="form-group">
+            <label>Last price: </label>
+            <input type="number" name="cprice" ng-model="option.cprice" placeholder="$" min="0">
+          </div>
+          <div class="form-group">
+            <label>CALL: </label>
+            <input type="radio" name="cpflag" ng-model="option.cpflag" value="c">
+            <label>PUT: </label>
+            <input type="radio" name="cpflag" ng-model="option.cpflag" value="p">
+          </div>
+          <div class="form-group">
+            <label>Expiration date: </label>
+            <input type="date" name="date" ng-model="option.expdate" placeholder="mm/dd/yyyy">
+          </div>
+          <div class="form-group">
+            <label>Strike price: </label>
+            <input type="number"" name="kprice" ng-model="option.kprice" placeholder="$" min="0">
+          </div>
+          <div class="form-group">
+            <label>Volatility: </label>
+            <input type="number" name="vol" ng-model="option.vol" placeholder="%" min="0">
+          </div>
+          <div class="form-group">
+            <label>Interest rate: </label>
+            <input type="number" name="ticker" ng-model="option.intrate" placeholder="%" min="0" max="100">
+          </div>
+          <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Pricing</button>
+        </form>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1 tableHead">Contracts</div>
+          <div class="col-md-1 tableHead">C/P</div>
+          <div class="col-md-1 tableHead">Strike</div>
+          <div class="col-md-1 tableHead">Volatility</div>
+        </div>
+        <div class="container" ng-repeat="opt in storage">
+          <div class="col-md-1">{{opt.contracts}}</div>
+          <div class="col-md-1">{{opt.cpflag}}</div>
+          <div class="col-md-1">{{opt.kprice}}</div>
+          <div class="col-md-1">{{opt.vol}}</div>
+          <button ng-click="remove(opt)" type="button" class="btn btn-default" aria-label="Remove">
+            <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
