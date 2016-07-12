@@ -1,8 +1,7 @@
 <div class="container-fluid">
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-sm-2">
       <div ng-submit="addOption(option.ticker, option.cpflag, option.cprice, option.kprice, option.expdate, option.intrate, option.vol)">
-        <!-- BlackScholes(option.cpflag, option.cprice, option.kprice, option.expdate, option.intrate, option.vol) -->
         <form>
           <div class="form-group">
             <label for="tickerForm">Ticker: </label>
@@ -10,7 +9,7 @@
           </div>
           <div class="form-group">
             <label>Last price: </label>
-            <input type="number" name="cprice" ng-model="option.cprice" placeholder="$" min="0">
+            <input type="number" name="cprice" ng-model="option.cprice" placeholder="$" min="0" step="0.01">
           </div>
           <div class="form-group">
             <label>CALL: </label>
@@ -28,34 +27,57 @@
           </div>
           <div class="form-group">
             <label>Volatility: </label>
-            <input type="number" name="vol" ng-model="option.vol" placeholder="%" min="0">
+            <input type="number" name="vol" ng-model="option.vol" placeholder="%" min="0" step="0.1">
           </div>
           <div class="form-group">
             <label>Interest rate: </label>
-            <input type="number" name="ticker" ng-model="option.intrate" placeholder="%" min="0" max="100">
+            <input type="number" name="ticker" ng-model="option.intrate" placeholder="%" min="0" max="100" step="0.1">
           </div>
-          <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Pricing</button>
+          <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Add option</button>
         </form>
       </div>
     </div>
-    <div class="col-md-9">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-1 tableHead">Contracts</div>
-          <div class="col-md-1 tableHead">C/P</div>
-          <div class="col-md-1 tableHead">Strike</div>
-          <div class="col-md-1 tableHead">Volatility</div>
-        </div>
-        <div class="container" ng-repeat="opt in storage">
-          <div class="col-md-1">{{opt.contracts}}</div>
-          <div class="col-md-1">{{opt.cpflag}}</div>
-          <div class="col-md-1">{{opt.kprice}}</div>
-          <div class="col-md-1">{{opt.vol}}</div>
-          <button ng-click="remove(opt)" type="button" class="btn btn-default" aria-label="Remove">
+    <div class="col-sm-10">
+      <div class="row">
+        <div class="col-sm-1 tableHead">Contr</div>
+        <div class="col-sm-1 tableHead">Price</div>
+        <div class="col-sm-1 tableHead">C/P</div>
+        <div class="col-sm-1 tableHead">k</div>
+        <div class="col-sm-1 tableHead">Vol</div>
+        <div class="col-sm-1 tableHead">DTM</div>
+        <div class="col-sm-1 tableHead">Notional</div>
+      </div>
+      <div class="row" ng-repeat="opt in storage">
+        <div class="col-sm-1 tableItem">{{opt.contracts | number:0 }}</div>
+        <div class="col-sm-1 tableItem">{{opt.bsprice | number:2 }}</div>
+        <div class="col-sm-1 tableItem">{{opt.cpflag}}</div>
+        <div class="col-sm-1 tableItem">{{opt.k}}</div>
+        <div class="col-sm-1 tableItem">{{opt.vol / 100 | percentage:1 }}</div>
+        <div class="col-sm-1 tableItem">{{opt.expdate | number:2 }}</div>
+        <div class="col-sm-1 tableItem">{{opt.contracts * opt.bsprice | number:2 }}</div>
+        <div class="col-sm-2">
+          <button ng-click="reduceContract(opt)" type="button" class="btn btn-default btn-xs" aria-label="Remove">
             <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+          </button>
+          <button ng-click="addContract(opt)" type="button" class="btn btn-default btn-xs" aria-label="Remove">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+          </button>
+          <button ng-click="deleteContract(opt)" type="button" class="btn btn-default btn-xs" aria-label="Remove">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
           </button>
         </div>
       </div>
+      <div class="row">
+        <div class="col-sm-3 col-sm-offset-4 tableItem">
+          <div class="row">
+            <div class="col-sm-8 tableHead" ng-if="storage.length">TOTAL</div>
+            <div class="col-sm-4 tableHead" ng-if="storage.length">{{totalSpend() | number:2}}</div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+    <div line-chart>GRAPH</div>
   </div>
 </div>
