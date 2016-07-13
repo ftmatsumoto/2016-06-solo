@@ -9,23 +9,25 @@ angular.module('app.option', ['app.chart'])
   $scope.addPayout = function(){
     var result = [];
     for (var i = 0; i < $scope.storage.length; i++) {
-      var obj = {};
       if ($scope.storage[i]['cpflag'] === 'c') {
-        for (var j = -10; j <= 10; j++) {
-          obj['price'] = ($scope.storage[i]['spot'] - j);
-          obj['payout'] = (obj['price'] - $scope.storage[i]['k']) - $scope.storage[i]['bsprice'];
-          $scope.myData.push(obj);
+        for (var j = -20; j <= 20; j++) {
+          console.log($scope.storage[i]['spot'], j, $scope.storage[i]['k']);
+          var obj = {};
+          obj['price'] = $scope.storage[i]['spot'] + j;
+          obj['payout'] = Math.max((obj['price'] - $scope.storage[i]['k']),0) - $scope.storage[i]['bsprice'];
+          result.push(obj);
         }
       } else {
-        for (var j = -10; j <= 10; j++) {
-          obj['price'] = ($scope.storage[i]['spot'] - j)
-          obj['payout'] = ($scope.storage[i]['k'] - obj['price']) - $scope.storage[i]['bsprice'];
-          $scope.myData.push(obj);
+        for (var j = -20; j <= 20; j++) {
+          obj['price'] = ($scope.storage[i]['spot'] + j)
+          obj['payout'] = Math.max(($scope.storage[i]['k'] - obj['price']),0) - $scope.storage[i]['bsprice'];
+          result.push(obj);
         }
       }
     }
-    console.log($scope.myData);
+    // console.log($scope.myData);
     $scope.myData = result.slice();
+    // console.log($scope.myData);
   };
 
   $scope.addOption = function(ticker, cpflag, spot, k, expdate, intrate, vol) {
