@@ -1,4 +1,4 @@
-var app = angular.module('app', ['app.option', 'app.portfolio', 'ngRoute']);
+var app = angular.module('app', ['app.option', 'app.portfolio', 'app.chart', 'ngRoute']);
 
 app.config(function ($routeProvider) {
   $routeProvider
@@ -26,4 +26,3 @@ app.filter('percentage', ['$filter', function ($filter) {
     return $filter('number')(input * 100, decimals) + '%';
   };
 }]);
-

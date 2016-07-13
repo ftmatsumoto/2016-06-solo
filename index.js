@@ -19,6 +19,14 @@ app.get('/api/stockoption', function (req, res) {
   res.sendFile('index.html');
 });
 
+app.get('/ibov.csv', function (req, res) {
+  console.log('IBOV');
+  fs.readFile('ibov.csv', function(err, data){
+    res.writeHeader(200, headers);
+    res.end(data);
+  });
+});
+
 app.listen(port);
 
 console.log('Server now listening on port ' + port);

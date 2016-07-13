@@ -1,22 +1,64 @@
-angular.module('app.option', [])
+angular.module('app.option', ['app.chart'])
 .controller('OptionController', function ($scope, portfolioFactory) {
-  // $scope.output = 0;
+  // $scope.spot = 0;
+
+  $scope.myData = [];
+
   $scope.storage = [];
 
+  $scope.addPayout = function(){
+    var result = [];
+    for (var i = 0; i < $scope.storage.length; i++) {
+      var obj = {};
+      if ($scope.storage[i]['cpflag'] === 'c') {
+        for (var j = -10; j <= 10; j++) {
+          obj['price'] = ($scope.storage[i]['spot'] - j);
+          obj['payout'] = (obj['price'] - $scope.storage[i]['k']) - $scope.storage[i]['bsprice'];
+          $scope.myData.push(obj);
+        }
+      } else {
+        for (var j = -10; j <= 10; j++) {
+          obj['price'] = ($scope.storage[i]['spot'] - j)
+          obj['payout'] = ($scope.storage[i]['k'] - obj['price']) - $scope.storage[i]['bsprice'];
+          $scope.myData.push(obj);
+        }
+      }
+    }
+    console.log($scope.myData);
+    $scope.myData = result.slice();
+  };
+
   $scope.addOption = function(ticker, cpflag, spot, k, expdate, intrate, vol) {
+    // console.log(ticker, cpflag, spot, k, expdate, intrate, vol);
     $scope.storage.push({
       contracts: 0,
       ticker: ticker,
       cpflag: cpflag || 'c',
       spot: spot || 0,
       k: k || 0,
-      expdate: $scope.fixTime(expdate),
+      expdate: expdate,
       intrate: intrate || 0,
       vol: vol || 0,
       bsprice: $scope.BlackScholes(cpflag, spot, k, expdate, intrate, vol)
     })
-    // console.log($scope.storage);
+    $scope.addPayout();
   };
+
+  $scope.updatePrice = function(newSpot){
+    // console.log('update')
+    for (var i = 0; i < $scope.storage.length; i++) {
+      cpflag = $scope.storage[i]['cpflag'];
+      spot = newSpot;
+      k = $scope.storage[i]['k'];
+      expdate = $scope.storage[i]['expdate'];
+      intrate = $scope.storage[i]['intrate'];
+      vol = $scope.storage[i]['vol'];
+      // console.log($scope.BlackScholes(cpflag, spot, k, expdate, intrate, vol), cpflag, spot, k, expdate, intrate, vol);
+      $scope.storage[i]['bsprice'] = $scope.BlackScholes(cpflag, spot, k, expdate, intrate, vol);
+    }
+    $scope.addPayout();
+  };
+
   $scope.addContract = function(item) {
     var index = $scope.storage.indexOf(item);
     $scope.storage[index].contracts++;
