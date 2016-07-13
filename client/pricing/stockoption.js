@@ -19,6 +19,7 @@ angular.module('app.option', ['app.chart'])
         }
       } else {
         for (var j = -20; j <= 20; j++) {
+          var obj = {};
           obj['price'] = ($scope.storage[i]['spot'] + j)
           obj['payout'] = Math.max(($scope.storage[i]['k'] - obj['price']),0) - $scope.storage[i]['bsprice'];
           result.push(obj);
